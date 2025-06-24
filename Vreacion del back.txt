@@ -1,0 +1,5 @@
+1-npm init
+2-creamos un index.js
+3-crear las carpetas necesarias para el back public
+controller, rutes, models, midelware etc.
+4-instalacciones del back
