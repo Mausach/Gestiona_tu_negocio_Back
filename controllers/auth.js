@@ -95,7 +95,7 @@ const crearUsuario = async (req, res) => {
       apellido,
       email,
       password: passwordHash, // Guardamos el hash, no la contraseña en texto plano
-      rol: rol || 'usuario' // Si no se especifica, será 'usuario'
+      rol: 'usuario' // Si no se especifica, será 'usuario'
     });
 
     // Guardar en MongoDB
