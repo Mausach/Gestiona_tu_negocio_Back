@@ -5,16 +5,11 @@ const Usuario = require('../models/Usuario');
 
 
 const loginUsuario = async (req, res) => {
-    const { emailOrUsername, password } = req.body; // Cambiamos el nombre del campo
+    const { email, password } = req.body; // Cambiamos el nombre del campo
 
     try {
         // 1. Buscar usuario por email O username
-        const user = await Usuario.findOne({
-            $or: [
-                { email: emailOrUsername },
-                { userName: emailOrUsername }
-            ]
-        });
+        const user = await Usuario.findOne({ email });
 
         if (!user) {
             return res.status(400).json({
@@ -73,7 +68,7 @@ const crearUsuario = async (req, res) => {
     const { nombre, apellido, email, password } = req.body;
 
     // Validación 1: Campos obligatorios
-    if (!nombre || !apellido || !email || !userName || !password) {
+    if (!nombre || !apellido || !email || !password) {
       return res.status(400).json({ 
         success: false,
         message: 'Faltan campos obligatorios: nombre, apellido, email, userName o password.' 
@@ -89,14 +84,6 @@ const crearUsuario = async (req, res) => {
       });
     }
 
-    // Validación 3: userName único
-    const existeUserName = await Usuario.findOne({ userName });
-    if (existeUserName) {
-      return res.status(400).json({
-        success: false,
-        message: 'El nombre de usuario ya está en uso.'
-      });
-    }
 
     // Hash de la contraseña (seguridad)
     const salt = await bcryptjs.genSalt(10);
@@ -107,7 +94,6 @@ const crearUsuario = async (req, res) => {
       nombre,
       apellido,
       email,
-      userName,
       password: passwordHash, // Guardamos el hash, no la contraseña en texto plano
       rol: rol || 'usuario' // Si no se especifica, será 'usuario'
     });

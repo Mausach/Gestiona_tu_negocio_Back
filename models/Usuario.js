@@ -39,12 +39,6 @@ const userSchema = new Schema({
     },
 
 
-    // === Autenticación ===
-    userName: {
-        type: String,
-        required: true
-    },
-
     password: {
         type: String,
         required: true
