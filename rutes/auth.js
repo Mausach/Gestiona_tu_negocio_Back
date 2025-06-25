@@ -12,7 +12,7 @@ const routerAuth = express.Router();
 //para logear usuario
 routerAuth.post('/login',
     [
-        check("emailOrUsername", "El email o nombre de usuario es obligatorio").not().isEmpty(),
+        check("email", "El email o nombre de usuario es obligatorio").not().isEmpty(),
         check("password", "La contraseña es obligatoria").not().isEmpty(),
         validarCampos
     ],
@@ -21,7 +21,7 @@ routerAuth.post('/login',
 
 routerAuth.post('/new-user',
     [
-        check("emailOrUsername", "El email o nombre de usuario es obligatorio").not().isEmpty(),
+        check("email", "El email o nombre de usuario es obligatorio").not().isEmpty(),
         check("password", "La contraseña es obligatoria").not().isEmpty(),
         validarCampos
     ],

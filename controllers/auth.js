@@ -70,7 +70,7 @@ const loginUsuario = async (req, res) => {
 
 const crearUsuario = async (req, res) => {
   try {
-    const { nombre, apellido, email, userName, password } = req.body;
+    const { nombre, apellido, email, password } = req.body;
 
     // Validación 1: Campos obligatorios
     if (!nombre || !apellido || !email || !userName || !password) {
