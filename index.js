@@ -17,10 +17,10 @@ dbConeccion();
 app.use(cors());
 
 //directorio publico
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 //lectura y parseo del body
-//app.use(express.json());
+app.use(express.json());
 
 //midelwars son procesos que se van a correr durante la ejecucion
 app.use("/auth",require('./rutes/auth'))
