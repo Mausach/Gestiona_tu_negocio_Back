@@ -14,7 +14,7 @@ const loginUsuario = async (req, res) => {
         if (!user) {
             return res.status(400).json({
                 ok: false,
-                msg: "Credenciales inválidas" // Mensaje genérico por seguridad
+                message: "Credenciales inválidas" // Mensaje genérico por seguridad
             });
         }
 
@@ -23,7 +23,7 @@ const loginUsuario = async (req, res) => {
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msg: "Credenciales inválidas" // Mismo mensaje para evitar filtraciones
+                message: "Credenciales inválidas" // Mismo mensaje para evitar filtraciones
             });
         }
 
@@ -31,7 +31,7 @@ const loginUsuario = async (req, res) => {
         if (!user.estado) {
             return res.status(403).json({
                 ok: false,
-                msg: "Usuario inhabilitado. Contacte al administrador"
+                message: "Usuario inhabilitado. Contacte al administrador"
             });
         }
 
@@ -51,14 +51,14 @@ const loginUsuario = async (req, res) => {
             ok: true,
             usuario:user,
             token,
-            msg: "Inicio de sesión exitoso",
+            message: "Inicio de sesión exitoso",
         });
 
     } catch (error) {
         console.error('Error en login:', error);
         res.status(500).json({
             ok: false,
-            msg: "Error interno. Contacte al administrador"
+            message: "Error interno. Contacte al administrador"
         });
     }
 };
