@@ -29,10 +29,13 @@ app.use("/auth",require('./rutes/auth'))
 app.use("/admin",require('./rutes/admin'))
 
 //para productos
-//app.use("/prod",require('./rutes/product'))
+app.use('/producto', require('./rutes/producto'));
+
+//para los servicios
+app.use('/servicio', require('./rutes/servicio'));
 
 //para las ventas
-//app.use("/ventas",require('./rutes/RegVentas'))
+app.use('/venta', require('./rutes/venta'));
 
 //para aplicar mercadopago
 //app.use("/rend",require('./rutes/rendiciones'))
@@ -49,3 +52,8 @@ app.use("/admin",require('./rutes/admin'))
 //app.listen(process.env.PORT),()=>{
   //  console.log('server corriendo en puerto 4k');
 //};
+
+if (process.env.CREAR_USUARIO_EJEMPLO === "true") {
+    const crearUsuarioEjemplo = require('./scripts/crearUsuarioEjemplo');
+    crearUsuarioEjemplo.crearUsuarioEjemplo && crearUsuarioEjemplo.crearUsuarioEjemplo();
+}
