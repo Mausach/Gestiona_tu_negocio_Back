@@ -1,57 +1,30 @@
 const express = require('express');
-const { crearProducto, editarProducto, eliminarProducto, cargarProducto, cargarUsuarios, cargarPedidos, confirmarPedido, inhabilitarUsuario, cargarProducto_Aleatorio, habilitarUsuario } = require('../controllers/admin');
+const { crearProducto, editarProducto, eliminarProducto, cargarProducto, cargarUsuarios, cargarPedidos, confirmarPedido, inhabilitarUsuario, cargarProducto_Aleatorio, habilitarUsuario, obtenerUsuarios, CambiarEstadoUsuario, actualizarUsuario } = require('../controllers/admin');
 
 const { check } = require('express-validator');
 
 //const { validarJWTAdmin } = require('../Midelwares/validarJwtAdmin');
 const { validarCampos } = require('../midelwares/validarCampos');
+const { validarJWTAdmin } = require('../midelwares/calidarJWTAdmins');
 
 const routerAdmin = express.Router();
 
-/*
-routerAdmin.post( 
-  '/new', validarJWTAdmin, [ 
-
-  check("name", "el nombre es obligatorio").not().isEmpty(),
-  check("precio", "el precio es obligatorio").not().isEmpty(),
-  check("cantidad", "la cantidad es obligatoria").not().isEmpty(),
-  check("detalle", "el detalle es obligatorio").not().isEmpty(),
-  check("categoria", "la categoria es obligatoria").not().isEmpty(),
-  validarCampos,
-
-], crearProducto
-);
-
-
-
+//editar datos del usuario
 routerAdmin.put(
-  '/edit', validarJWTAdmin, [ 
-
-  check("name", "el nombre es obligatorio").not().isEmpty(),
-  check("precio", "el precio es obligatorio").not().isEmpty(),
-  check("cantidad", "la cantidad es obligatoria").not().isEmpty(),
-  check("detalle", "el detalle es obligatorio").not().isEmpty(),
-  check("categoria", "la categoria es obligatoria").not().isEmpty(),
-  validarCampos,
-
-], editarProducto
+  '/update-user',
+  validarJWTAdmin,
+  [
+    check("nombre", "El nombre es obligatorio").optional().not().isEmpty().trim(),
+    check("apellido", "El apellido es obligatorio").optional().not().isEmpty().trim(),
+    check("email", "El email debe ser válido").optional().isEmail(),
+    check("password", "La contraseña debe tener mínimo 5 caracteres").optional().isLength({ min: 8 }),
+    validarCampos
+  ],
+  actualizarUsuario
 );
 
-routerAdmin.delete('/eliminar/:id', validarJWTAdmin, eliminarProducto);
+routerAdmin.put('/change-state', validarJWTAdmin, CambiarEstadoUsuario);
 
-routerAdmin.get('/productos', cargarProducto);
-
-routerAdmin.get('/productos/aleatorios', cargarProducto_Aleatorio);
-
-routerAdmin.get('/usuarios', validarJWTAdmin, cargarUsuarios);
-
-routerAdmin.get('/pedidos', validarJWTAdmin, cargarPedidos);
-
-routerAdmin.put('/confirmar', validarJWTAdmin, confirmarPedido);
-
-routerAdmin.put('/Deshabilitar', validarJWTAdmin, inhabilitarUsuario);
-
-routerAdmin.put('/Habilitar', validarJWTAdmin, habilitarUsuario);
-*/
+routerAdmin.get('/usuarios',validarJWTAdmin, obtenerUsuarios);
 
 module.exports = routerAdmin;
