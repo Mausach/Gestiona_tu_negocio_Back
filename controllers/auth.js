@@ -1,6 +1,8 @@
 const bcryptjs = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const Usuario = require('../models/Usuario');
+const Venta = require('../models/Venta');
+
 
 
 
@@ -123,10 +125,50 @@ const crearUsuario = async (req, res) => {
   }
 };
 
+//obtiene ventas del usuario
+const obtenerVentasPorUsuario = async (req, res) => {
+    try {
+        const { usuarioId } = req.params;
+
+   console.log(typeof usuarioId, usuarioId);
+
+        // 2. Buscar ventas del usuario, ordenadas por fecha descendente
+       
+          const ventas = await Venta.find({ usuarioId })
+      .select('-__v')
+      .sort({ fecha: -1 })
+      .lean();
+
+        // 3. Si no hay ventas, retornar mensaje
+        if (ventas.length === 0) {
+            return res.status(200).json({
+                ok: true,
+                ventas: [],
+                message: "El usuario no tiene ventas registradas"
+            });
+        }
+
+        // 4. Retornar ventas encontradas
+        res.status(200).json({
+            ok: true,
+            ventas,
+            message: "Ventas obtenidas exitosamente"
+        });
+
+    } catch (error) {
+        console.error("Error al obtener ventas:", error);
+        res.status(500).json({
+            ok: false,
+            message: "Error interno del servidor"
+        });
+    }
+};
+
 
 
 module.exports = {
     loginUsuario,
-    crearUsuario
+    crearUsuario,
+obtenerVentasPorUsuario
    
 };

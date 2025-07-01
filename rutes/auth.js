@@ -2,9 +2,10 @@ const express = require('express');
 
 const { check } = require('express-validator');
 
-const { loginUsuario } = require('../controllers/auth');
+const { loginUsuario, obtenerVentasPorUsuario } = require('../controllers/auth');
 const { validarCampos } = require('../midelwares/validarCampos');
 const { crearUsuario } = require('../controllers/auth');
+const { validarJWT } = require('../midelwares/validarJWT');
 
 const routerAuth = express.Router();
 
@@ -27,6 +28,10 @@ routerAuth.post('/new-user',
     ],
     crearUsuario
 );
+
+
+// Obtener ventas por usuario (GET /api/ventas/usuario/:usuarioId)
+routerAuth.get('/usuario/:usuarioId',validarJWT, obtenerVentasPorUsuario);
 
 
 module.exports = routerAuth;
