@@ -33,7 +33,7 @@ const loginUsuario = async (req, res) => {
         if (!user.estado) {
             return res.status(403).json({
                 ok: false,
-                message: "Usuario inhabilitado. Contacte al administrador"
+                message: "Usuario inhabilitado. El tiempo de la demo ah finalizado, espero haya podido ver toda sus funciones y utilidades, para mas informacion contactese con nosotros."
             });
         }
 
